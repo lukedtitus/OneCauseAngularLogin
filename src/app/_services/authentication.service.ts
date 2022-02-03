@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
-const apiUrl = 'localhost';
+const apiUrl = 'http://localhost:8081';
 
 @Injectable({ providedIn: 'root'})
 export class AuthenticationService{
@@ -13,14 +13,8 @@ export class AuthenticationService{
     constructor(private _http: HttpClient, private _router: Router, public datepipe: DatePipe) { }
 
     login(username, password) {
-        let token = this.datepipe.transform((new Date), 'hhmm');
+        let token = this.datepipe.transform((new Date), 'HH:mm');
         console.log(token);
-        //fix with api endpoint url
-        return this._http.post<any>(`${apiUrl}/users/auth`, { username, password, token })
-            .pipe(map(user => {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                return user;
-            }
-        ));
+        return this._http.post<any>(`${apiUrl}/login`, { username, password, token });
     }
 }

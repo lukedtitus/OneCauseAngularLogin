@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    window.location.href = this.returnUrl;
                 },
                 error => {
                     this.error = 'Username or Password is incorrect.';
